@@ -16,6 +16,7 @@ result = 0
 i = 0
 while i < input_month
   result += days_in_months[i]
+  i += 1
 end
 
 puts result
