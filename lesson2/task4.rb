@@ -2,14 +2,11 @@ puts "Хеш латинских букв и их порядковый номер
 
 letters = ("A".."Z").to_a
 vowels = ["A","E","I","O","U","Y"]
-letter_hash = Hash.new
+letter_hash = {}
 
 # Заполнить хеш буквами и порядковым номером
-letters.count.times do |order|
-  letter = letters[order]
-  if vowels.include?(letter)
-    letter_hash[letter] = order + 1
-  end
+letters.each.with_index(1) do |letter, order|
+  letter_hash[letter] = order if vowels.include?(letter)
 end
 
 # Вывести хеш букв

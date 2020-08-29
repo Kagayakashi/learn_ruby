@@ -10,19 +10,11 @@ puts "День:"
 input_day = gets.chomp.to_i
 
 # Весокосный год или нет
-if input_year % 400 == 0
-  extra_day = 1
-elsif input_year % 100 == 0
-  extra_day = 0
-elsif input_year % 4 == 0
-  extra_day = 1
-else
-  extra_day = 0
-end
+leap_year = input_year % 400 == 0 || input_year % 4 == 0 ? true : false
 
 # Посчитать количество дней используя месяц
-days_in_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-days_count = 0
+days_in_months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+days_count = input_day
 
 i = 1
 while i < input_month
@@ -30,6 +22,6 @@ while i < input_month
   i += 1
 end
 
-days_count += input_day + extra_day
+days_count -= 1 if !leap_year
 
 puts days_count
