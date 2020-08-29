@@ -1,21 +1,21 @@
 puts "Пожалуйста, введите дату в числовом формате."
 
+days_in_months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
 puts "Год:"
-input_year = gets.chomp.to_i
+year = gets.chomp.to_i
 
 puts "Месяц:"
-input_month = gets.chomp.to_i
+month = gets.chomp.to_i
 
 puts "День:"
-input_day = gets.chomp.to_i
+day = gets.chomp.to_i
 
 # Весокосный год или нет
-leap_year = input_year % 4 == 0 && input_year % 100 != 0 || input_year % 400 == 0
+# Изменить количество дней в феврале
+days_in_months[1] = 29 if year % 4 == 0 && year % 100 != 0 || year % 400 == 0
 
-# Посчитать количество дней используя месяц
-days_in_months = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-days_count = input_day + days_in_months.take(input_month - 1).sum
-days_count -= 1 if !leap_year
+# Посчитать количество дней
+days_count = day + days_in_months.take(month - 1).sum
 
 puts days_count
