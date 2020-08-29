@@ -157,6 +157,9 @@ train.del_car
 
 puts train.car_amount
 
+train.next_station
+train.next_station
+
 train.stations
 
 train.speed_up # 1
@@ -164,5 +167,11 @@ train.speed_up # 1
 train.next_station
 train.next_station
 train.next_station
+
+train.stations
+
+train.prev_station
+train.prev_station
+train.prev_station
 
 train.stations
