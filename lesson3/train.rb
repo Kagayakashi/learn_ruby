@@ -71,6 +71,9 @@ class Train
     if @station_number == @route.max_stations
       puts "Мы находимся на последней станции!"
       return
+    elsif @speed == 0
+      puts "Поезд не движется!"
+      return
     end
     
     @station_number += 1
@@ -80,6 +83,9 @@ class Train
   def prev_station
     if @station_number == 1
       puts "Мы находимся на первой станции!"
+      return
+    elsif @speed == 0
+      puts "Поезд не движется!"
       return
     end
   
@@ -152,6 +158,8 @@ train.del_car
 puts train.car_amount
 
 train.stations
+
+train.speed_up # 1
 
 train.next_station
 train.next_station
