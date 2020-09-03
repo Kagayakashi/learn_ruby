@@ -13,7 +13,7 @@ class Route
   end
   
   def add(station)
-    @stations.insert(@stations.length - 1, station)
+    @stations.insert(-2, station) # Вставить элемент перед последним
     puts "\nВ маршрут добавлена станция #{station.name}."
   end
   

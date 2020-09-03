@@ -71,7 +71,9 @@ class Train
       return
     end
     
+    current_station.del(self)
     @station_number += 1
+    current_station.add(self)
   end
   
   def goto_prev_station
@@ -82,8 +84,10 @@ class Train
       puts "Поезд не движется!"
       return
     end
-  
+    
+    current_station.del(self)
     @station_number -= 1
+    current_station.add(self)
   end
   
   def current_station
@@ -95,7 +99,7 @@ class Train
   end
   
   def prev_station
-    @route.stations[@station_number - 1] if @station_number - 1 != -1
+    @route.stations[@station_number - 1] if @station_number.positive?
   end
   
   def stations
