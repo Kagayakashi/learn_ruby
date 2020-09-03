@@ -60,6 +60,7 @@ class Train
   def route=(route)
     @route = route
     @station_number = 0
+    current_station.add(self)
   end
   
   def goto_next_station
