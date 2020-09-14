@@ -14,7 +14,7 @@ class Station
   # По умолчанию вызвать список вагонов, либо произвольный список
   def list(trains = @trains)
     puts "\nСписок поездов на станции:"
-    trains.each {|train| puts "Поезд #{train.type} - #{train.num}, #{train.car_amount} вагонов."}
+    trains.each {|train| puts "Поезд #{train.type} - #{train.num}, #{train.cars.count} вагонов."}
   end
   
   # Отфильтровать список вагонов по типу и вызвать метод train_list

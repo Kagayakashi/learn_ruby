@@ -63,7 +63,7 @@ class Train
   end
   
   def goto_next_station
-    if @station_number == @route.stations.length
+    if current_station == @route.last_station
       puts "Мы находимся на последней станции!"
       return
     elsif @speed == 0
@@ -77,7 +77,7 @@ class Train
   end
   
   def goto_prev_station
-    if @station_number == 0
+    if current_station == @route.first_station
       puts "Мы находимся на первой станции!"
       return
     elsif @speed == 0

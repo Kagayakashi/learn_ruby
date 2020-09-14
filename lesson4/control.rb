@@ -12,6 +12,7 @@ require_relative 'Train/cargo_train'
 
 STATE_MENU = 10
 STATE_CREATE_STATION = 20
+STATE_STATION_TRAINS = 21
 STATE_CREATE_PASSENGER_TRAIN = 30
 STATE_CREATE_CARGO_TRAIN = 40
 STATE_CREATE_PASSENGER_CAR = 50
@@ -21,7 +22,7 @@ STATE_ADD_STATION_TO_ROUTE = 80
 STATE_DEL_STATION_FROM_ROUTE = 90
 STATE_TRAIN_CONTROL = 100
 STATE_TRAIN_MENU = 110
-STATE_TRAIN_ADD_STATION = 120
+STATE_TRAIN_ADD_ROUTE = 120
 STATE_TRAIN_SPEED_UP = 130
 STATE_TRAIN_SPEED_DOWN = 140
 STATE_TRAIN_GOTO_NEXT_STATION = 150
@@ -34,6 +35,7 @@ class Controller
 
   def initialize
     @stations = []
+    @stations_all = []
     @trains = []
     @cars = []
     @routes = []
@@ -64,6 +66,7 @@ class Controller
     case @state
     when STATE_MENU then render_menu
     when STATE_CREATE_STATION then render_create_station
+    when STATE_STATION_TRAINS then render_station_train_list
     when STATE_CREATE_PASSENGER_TRAIN then render_create_passenger_train
     when STATE_CREATE_CARGO_TRAIN then render_create_cargo_train
     when STATE_CREATE_PASSENGER_CAR then render_create_passenger_car
@@ -73,7 +76,7 @@ class Controller
     when STATE_DEL_STATION_FROM_ROUTE then render_del_station_from_route
     when STATE_TRAIN_CONTROL then render_train_control
     when STATE_TRAIN_MENU then render_train_menu
-    when STATE_TRAIN_ADD_STATION then render_train_add_station
+    when STATE_TRAIN_ADD_ROUTE then render_train_add_route
     when STATE_TRAIN_SPEED_UP then render_train_speed_up
     when STATE_TRAIN_SPEED_DOWN then render_train_speed_down
     when STATE_TRAIN_GOTO_NEXT_STATION then render_train_goto_next_station
@@ -88,27 +91,29 @@ class Controller
   def render_menu
     puts "\nГлавное меню:"
     puts "1.Создать новую станцию"
-    puts "2.Создать пассажирский поезд"
-    puts "3.Создать грузовой поезд"
-    puts "4.Создать пассажирский вагон"
-    puts "5.Создать грузовой вагон"
-    puts "6.Создать маршрут"
-    puts "7.Добавить станцию в выбранный маршрут"
-    puts "8.Удалить станцию из выбранного маршрута"
-    puts "9.Управление поездом"
+    puts "2.Список поездов на станции"
+    puts "3.Создать пассажирский поезд"
+    puts "4.Создать грузовой поезд"
+    puts "5.Создать пассажирский вагон"
+    puts "6.Создать грузовой вагон"
+    puts "7.Создать маршрут"
+    puts "8.Добавить промежуточную станцию в маршрут"
+    puts "9.Удалить промежуточную станцию из маршрута"
+    puts "10.Управление поездом"
 
     get_input
 
     case @input.to_i
     when 1 then @state = STATE_CREATE_STATION
-    when 2 then @state = STATE_CREATE_PASSENGER_TRAIN
-    when 3 then @state = STATE_CREATE_CARGO_TRAIN
-    when 4 then @state = STATE_CREATE_PASSENGER_CAR
-    when 5 then @state = STATE_CREATE_CARGO_CAR
-    when 6 then @state = STATE_CREATE_ROUTE
-    when 7 then @state = STATE_ADD_STATION_TO_ROUTE
-    when 8 then @state = STATE_DEL_STATION_FROM_ROUTE
-    when 9 then @state = STATE_TRAIN_CONTROL
+    when 2 then @state = STATE_STATION_TRAINS
+    when 3 then @state = STATE_CREATE_PASSENGER_TRAIN
+    when 4 then @state = STATE_CREATE_CARGO_TRAIN
+    when 5 then @state = STATE_CREATE_PASSENGER_CAR
+    when 6 then @state = STATE_CREATE_CARGO_CAR
+    when 7 then @state = STATE_CREATE_ROUTE
+    when 8 then @state = STATE_ADD_STATION_TO_ROUTE
+    when 9 then @state = STATE_DEL_STATION_FROM_ROUTE
+    when 10 then @state = STATE_TRAIN_CONTROL
     end
   end
   
@@ -120,8 +125,24 @@ class Controller
     station = Station.new(@input)
     
     @stations << station
-    
+    @stations_all << station
     @state = STATE_MENU
+  end
+
+  def render_station_train_list
+    @state = STATE_MENU
+    
+    if @stations_all.count == 0
+      puts "\nНет станций для выбора!"
+      return
+    end
+    
+    puts "Выберите станцию:"
+    @stations_all.each.with_index(&@name_with_index)
+    get_input
+    station = @stations_all[@input.to_i]
+    
+    station.list
   end
 
   def render_create_passenger_train
@@ -292,7 +313,7 @@ class Controller
     when 7 then @state = STATE_TRAIN_ADD_CAR
     when 8 then @state = STATE_TRAIN_DEL_CAR
     when 9 then @state = STATE_TRAIN_CAR_LIST
-    when 0 then @state = STATE_MAIN_MENU
+    when 0 then @state = STATE_MENU
     end
   end
   
