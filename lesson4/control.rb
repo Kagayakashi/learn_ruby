@@ -373,12 +373,8 @@ class Controller
     get_input
     car = @cars[@input.to_i]
     
-    if @choosen_train.type != car.type
-      puts "\nТип поезда и тип вагона должны совпадать!"
-      return
-    end
+    return if @choosen_train.add_car(car) == false
     
-    @choosen_train.add_car(car)
     @cars.delete(car)
   end
   
@@ -394,12 +390,7 @@ class Controller
     @choosen_train.cars.each.with_index(&@num_with_index)
     get_input
     car = @choosen_train.cars[@input.to_i]
-    
-    if @choosen_train.type != car.type
-      puts "\nТип поезда и тип вагона должны совпадать!"
-      return
-    end
-    
+
     @choosen_train.del_car(car)
     @cars << car
   end

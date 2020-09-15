@@ -35,10 +35,13 @@ class Train
   def add_car(car)
     if cars_count == 100
       puts "Поезду запрещено использовать больше 100 вагонов!"
-      return
+      return false
     elsif @speed != 0
       puts "Остановите поезд!"
-      return
+      return false
+    elsif @type != car.type
+      puts "\nТип поезда и тип вагона должны совпадать!"
+      return false
     end
     
     @cars << car
