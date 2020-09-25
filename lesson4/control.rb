@@ -1,14 +1,14 @@
-require_relative 'Station/station'
+require_relative 'station/station'
 
-require_relative 'Route/route'
+require_relative 'route/route'
 
-require_relative 'Car/train_car'
-require_relative 'Car/passenger_car'
-require_relative 'Car/cargo_car'
+require_relative 'car/train_car'
+require_relative 'car/passenger_car'
+require_relative 'car/cargo_car'
 
-require_relative 'Train/train'
-require_relative 'Train/passenger_train'
-require_relative 'Train/cargo_train'
+require_relative 'train/train'
+require_relative 'train/passenger_train'
+require_relative 'train/cargo_train'
 
 STATE_MENU = 10
 STATE_CREATE_STATION = 20
