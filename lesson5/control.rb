@@ -316,7 +316,8 @@ class Controller
   end
   
   def render_train_menu
-    puts "\nМеню поезда #{@choosen_train.num}(#{@choosen_train.type}):"
+    current_train = @choosen_train.class.find(@choosen_train.num).num
+    puts "\nМеню поезда #{current_train}(#{@choosen_train.type}):"
     puts "1.Выбрать маршрут"
     puts "2.Начать движение/Повысить скорость"
     puts "3.Остановить движение/Понизить скорость"

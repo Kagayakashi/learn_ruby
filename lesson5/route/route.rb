@@ -7,13 +7,14 @@ class Route
     @first_station = first_station
     @last_station = last_station
     @stations = [first_station, last_station]
-    welcome
+    
     register_instance
-    puts "Создано #{self.instances} экземпляра маршрута."
+    welcome
   end
   
   def welcome
     puts "#{name} создан!"
+    puts "Создано #{self.class.instances} экземпляра маршрута."
   end
   
   def name

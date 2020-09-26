@@ -6,16 +6,24 @@ class Train
   
   
   attr_reader :speed, :num, :cars
-  
+  @@object_list_hash = {}
   
   def initialize(num)
     @num = num
     @cars = []
     @speed = 0
     
-    welcome
+    register_object(num)
     register_instance
-    puts "Создано #{self.instances} экземпляра поезда."
+    welcome
+  end
+  
+  def register_object(key)
+    @@object_list_hash[key] = self
+  end
+  
+  def self.find(num)
+    @@object_list_hash[num]
   end
 
   def car_list
@@ -130,5 +138,6 @@ class Train
   # Используется только внутри класса во время инициализации
   def welcome
     puts "Поезд #{@type} - #{@num} создан."
+    puts "Создано #{self.class.instances} экземпляра поезда."
   end
 end
