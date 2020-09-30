@@ -1,11 +1,16 @@
 class Station
   include InstanceCounter # Модуль счётчика экземпляров класса
+  include StationValidator
+  include Valid
   
   attr_reader :name
   @@instances = []
 
   def initialize(name)
     @name = name
+    
+    validate!
+    
     @trains = []
     @@instances << self
 

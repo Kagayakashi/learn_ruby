@@ -1,5 +1,8 @@
 module Valid
   def valid?
-    @is_valid
+    validate!
+    true
+  rescue
+    false
   end
 end

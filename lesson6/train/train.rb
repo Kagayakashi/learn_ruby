@@ -4,15 +4,18 @@ class Train
   # Выводится при выборе поезда для управления
   include InstanceCounter # Модуль счётчика экземпляров класса
   include Valid
+  include TrainValidator
   
   attr_reader :speed, :num, :cars
   @@object_list_hash = {}
   
   def initialize(num, valid)
     @num = num
+    
+    validate!
+    
     @cars = []
     @speed = 0
-    @is_valid = valid
     register_object(num)
     register_instance
     

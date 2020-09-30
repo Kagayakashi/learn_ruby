@@ -43,11 +43,6 @@ STATE_TRAIN_ADD_CAR = 180
 STATE_TRAIN_DEL_CAR = 190
 
 class Controller
-  include StationValidator
-  include TrainValidator
-  include CarValidator
-
-  attr_reader :input
 
   def initialize
     @stations = []
@@ -78,17 +73,6 @@ class Controller
   # Проверка из определенного модуля и обработка ошибки с повторным вводом.
   def get_input
     @input = gets.chomp
-    
-    case @state
-    when STATE_CREATE_STATION then validate_station!
-    when STATE_CREATE_PASSENGER_TRAIN then validate_train!
-    when STATE_CREATE_CARGO_TRAIN then validate_train!
-    when STATE_CREATE_PASSENGER_CAR then validate_car!
-    when STATE_CREATE_CARGO_CAR then validate_car!
-    end
-    true
-  rescue RuntimeError
-    retry
   end
   
   def render
@@ -148,9 +132,9 @@ class Controller
   
   def render_create_station
     puts "Введите наименование для новой станции:"
-
-    is_valid = get_input
-    station = Station.new(@input, is_valid)
+    get_input
+    
+    station = Station.new(@input)
     
     @stations << station
     @stations_all << station
@@ -180,9 +164,9 @@ class Controller
 
   def render_create_passenger_train
     puts "Введите номер для нового пассажирского поезда:"
-    is_valid = get_input
+    get_input
     
-    passenger_train = PassengerTrain.new(@input, is_valid)
+    passenger_train = PassengerTrain.new(@input)
     
     puts "Введите наименовани компании-производителя:"
     get_input
@@ -196,9 +180,9 @@ class Controller
 
   def render_create_cargo_train
     puts "Введите номер для нового грузового поезда:"
-    is_valid = get_input
+    get_input
     
-    cargo_train = CargoTrain.new(@input, is_valid)
+    cargo_train = CargoTrain.new(@input)
     
     puts "Введите наименовани компании-производителя:"
     get_input
@@ -212,9 +196,9 @@ class Controller
 
   def render_create_passenger_car
     puts "Введите номер для нового пассажирского вагона:"
-    is_valid = get_input
+    get_input
     
-    passenger_car = PassengerCar.new(@input, is_valid)
+    passenger_car = PassengerCar.new(@input)
     
     puts "Введите наименовани компании-производителя:"
     get_input
@@ -228,9 +212,9 @@ class Controller
 
   def render_create_cargo_car
     puts "Введите номер для нового грузового вагона:"
-    is_valid = get_input
+    get_input
     
-    cargo_car = CargoCar.new(@input, is_valid)
+    cargo_car = CargoCar.new(@input)
     
     puts "Введите наименовани компании-производителя:"
     get_input
