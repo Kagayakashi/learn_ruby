@@ -77,7 +77,6 @@ class Controller
   # Получения ввода от пользователя.
   # Проверка из определенного модуля и обработка ошибки с повторным вводом.
   def get_input
-    try_counter ||= 1
     @input = gets.chomp
     
     case @state
@@ -87,11 +86,8 @@ class Controller
     when STATE_CREATE_PASSENGER_CAR then validate_car!
     when STATE_CREATE_CARGO_CAR then validate_car!
     end
-    
     true
   rescue RuntimeError
-    try_counter += 1
-    return false if try_counter > 3
     retry
   end
   
