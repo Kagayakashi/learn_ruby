@@ -9,7 +9,7 @@ class Train
   attr_reader :speed, :num, :cars
   @@object_list_hash = {}
   
-  def initialize(num, valid)
+  def initialize(num)
     @num = num
     
     validate!

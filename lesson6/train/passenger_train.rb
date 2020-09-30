@@ -1,6 +1,6 @@
 class PassengerTrain < Train
   attr_reader :type
-    def initialize(num, valid)
+    def initialize(num)
     @type = "Пассажирский"
     super
   end
