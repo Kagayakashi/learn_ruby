@@ -144,6 +144,9 @@ class Controller
     Station.all.each(&@name_with_index)
     
     @state = STATE_MENU
+  rescue RuntimeError => e
+    puts "Error text::#{e.message}. Try again"
+    retry
   end
 
   def render_station_train_list
@@ -176,6 +179,9 @@ class Controller
     @trains << passenger_train
     
     @state = STATE_MENU
+  rescue RuntimeError => e
+    puts "Error text::#{e.message}. Try again"
+    retry
   end
 
   def render_create_cargo_train
@@ -192,6 +198,9 @@ class Controller
     @trains << cargo_train
     
     @state = STATE_MENU
+  rescue RuntimeError => e
+    puts "Error text::#{e.message}. Try again"
+    retry
   end
 
   def render_create_passenger_car
@@ -208,6 +217,9 @@ class Controller
     @cars << passenger_car
     
     @state = STATE_MENU
+  rescue RuntimeError => e
+    puts "Error text::#{e.message}. Try again"
+    retry
   end
 
   def render_create_cargo_car
@@ -224,6 +236,9 @@ class Controller
     @cars << cargo_car
     
     @state = STATE_MENU
+  rescue RuntimeError => e
+    puts "Error text::#{e.message}. Try again"
+    retry
   end
 
   def render_create_route
