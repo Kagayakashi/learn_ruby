@@ -145,7 +145,7 @@ class Controller
     
     @state = STATE_MENU
   rescue RuntimeError => e
-    puts "Error text::#{e.message}. Try again"
+    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -180,7 +180,7 @@ class Controller
     
     @state = STATE_MENU
   rescue RuntimeError => e
-    puts "Error text::#{e.message}. Try again"
+    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -199,7 +199,7 @@ class Controller
     
     @state = STATE_MENU
   rescue RuntimeError => e
-    puts "Error text::#{e.message}. Try again"
+    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -218,7 +218,7 @@ class Controller
     
     @state = STATE_MENU
   rescue RuntimeError => e
-    puts "Error text::#{e.message}. Try again"
+    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -237,7 +237,7 @@ class Controller
     
     @state = STATE_MENU
   rescue RuntimeError => e
-    puts "Error text::#{e.message}. Try again"
+    puts "Ошибка: #{e.message}"
     retry
   end
 
