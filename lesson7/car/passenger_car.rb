@@ -1,11 +1,9 @@
 class PassengerCar < TrainCar
-  attr_reader :type
   
   SEAT_FREE = false
   SEAT_IN_USE = true
   
   def initialize(num, seats_count)
-    @type = "Пассажирский"
     @seats = {}
     
     create_seats(seats_count)

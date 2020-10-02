@@ -1,4 +1,5 @@
 class Train
+  include TrainType
   include Author # Модуль - наименование производителя.
   # Задается при создании нового поезда
   # Выводится при выборе поезда для управления
@@ -25,7 +26,7 @@ class Train
   end
   
   def welcome
-    puts "Поезд #{@type} - #{@num} создан."
+    puts "Поезд #{type} - #{@num} создан."
   end
   
   def register_object(key)
@@ -57,9 +58,10 @@ class Train
   def add_car(car)
     return false if cars_count == 100
     return false if @speed != 0
-    return false if @type != car.type
+    return false if type != car.type
     
     @cars << car
+    true
   end
   
   def del_car(car)

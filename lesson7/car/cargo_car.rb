@@ -1,8 +1,6 @@
 class CargoCar < TrainCar
-  attr_reader :type
   
   def initialize(num, volume)
-    @type = "Грузовой"
     @max_volume = volume
     @current_volume = 0
     

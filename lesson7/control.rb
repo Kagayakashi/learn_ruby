@@ -1,4 +1,5 @@
 # Подключение модулей
+require_relative 'module/types/train'
 require_relative 'module/author'
 require_relative 'module/instance_counter'
 
@@ -361,6 +362,7 @@ class Controller
   
   def render_train_menu
     current_train = @choosen_train.class.find(@choosen_train.num).num
+    puts "Количество вагонов у поезда: #{@choosen_train.cars.count}"
     puts "\nМеню поезда #{current_train}(#{@choosen_train.type}):"
     puts "1.Выбрать маршрут"
     puts "2.Начать движение/Повысить скорость"
@@ -372,10 +374,10 @@ class Controller
     puts "8.Отцепить вагон"
     puts "9.Список вагонов"
     
-    if @choosen_train.type == "Пассажирский"
+    if @choosen_train.is_passenger
      puts "10.Занять место в вагоне"
      puts "11.Освободить место в вагоне"
-    elsif @choosen_train.type == "Грузовой"
+    elsif @choosen_train.is_cargo
      puts "10.Занять объем в вагоне"
      puts "11.Освободить объем в вагоне"
     end
@@ -504,7 +506,7 @@ class Controller
         puts "\t#{train.type} поезд - #{train.num} (Вагонов: #{train.car_list.count}):"
         
         train.for_each_car { |car|
-          car_param = car.type == "Пассажирский" ? passenger_car_info(car) : cargo_car_info(car)
+          car_param = car.is_passenger ? passenger_car_info(car) : cargo_car_info(car)
           puts "\t\t#{car.type} вагон - #{car.num} (#{car_param});"
         }
       }
@@ -522,14 +524,14 @@ class Controller
   def render_train_car_param_add
     car = render_choose_train_car
     
-    if car.type == "Пассажирский"
+    if car.is_passenger
       puts "Свободные места:"
       car.free_seats.each { |seat, _is_free| puts seat }
       
       puts "Укажите номер места, которое хотите занять:"
       get_input
       car.take_seat(@input.to_i)
-    elsif car.type == "Грузовой"
+    elsif car.is_cargo
       puts "Свободно: #{car.free_space}"
       
       puts "Укажите объем, который хотите загрузить:"
@@ -543,14 +545,14 @@ class Controller
   def render_train_car_param_del
     car = render_choose_train_car
     
-    if car.type == "Пассажирский"
+    if car.is_passenger
       puts "Занятые места места:"
       car.taked_seats.each { |seat, _is_free| puts seat }
       
       puts "Укажите номер места, которое хотите освободить:"
       get_input
       car.release_seat(@input.to_i)
-    elsif car.type == "Грузовой"
+    elsif car.is_cargo
       puts "Текущий объем: #{car.used_space}"
       
       puts "Укажите объем, который хотите выгрузить:"
