@@ -48,6 +48,45 @@ STATE_TRAIN_CAR_LIST = 200
 STATE_TRAIN_CAR_PARAM_ADD = 210
 STATE_TRAIN_CAR_PARAM_DEL = 220
 
+STATES_MAIN_MENU = {
+  1 => STATE_CREATE_STATION,
+  2 => STATE_STATION_TRAINS,
+  3 => STATE_CREATE_PASSENGER_TRAIN,
+  4 => STATE_CREATE_CARGO_TRAIN,
+  5 => STATE_CREATE_PASSENGER_CAR,
+  6 => STATE_CREATE_CARGO_CAR,
+  7 => STATE_CREATE_ROUTE,
+  8 => STATE_ADD_STATION_TO_ROUTE,
+  9 => STATE_DEL_STATION_FROM_ROUTE,
+  10 => STATE_TRAIN_CONTROL
+}.freeze
+
+RENDER_STATES = {
+  STATE_MENU => method(:render_menu),
+  STATE_CREATE_STATION => method(:render_create_station),
+  STATE_STATION_TRAINS => method(:render_station_train_list),
+  STATE_CREATE_PASSENGER_TRAIN => method(:render_create_passenger_train),
+  STATE_CREATE_CARGO_TRAIN => method(:render_create_cargo_train),
+  STATE_CREATE_PASSENGER_CAR => method(:render_create_passenger_car),
+  STATE_CREATE_CARGO_CAR => method(:render_create_cargo_car),
+  STATE_CREATE_ROUTE => method(:render_create_route),
+  STATE_ADD_STATION_TO_ROUTE => method(:render_add_station_to_route),
+  STATE_DEL_STATION_FROM_ROUTE => method(:render_del_station_from_route),
+  STATE_TRAIN_CONTROL => method(:render_train_control),
+  STATE_TRAIN_MENU => method(:render_train_menu),
+  STATE_TRAIN_ADD_ROUTE => method(:render_train_add_route),
+  STATE_TRAIN_SPEED_UP => method(:render_train_speed_up),
+  STATE_TRAIN_SPEED_DOWN => method(:render_train_speed_down),
+  STATE_TRAIN_GOTO_NEXT_STATION => method(:render_train_goto_next_station),
+  STATE_TRAIN_GOTO_PREV_STATION => method(:render_train_goto_prev_station),
+  STATE_TRAIN_STATION_LIST => method(:render_train_station_list),
+  STATE_TRAIN_ADD_CAR => method(:render_train_add_car),
+  STATE_TRAIN_DEL_CAR => method(:render_train_del_car),
+  STATE_TRAIN_CAR_LIST => method(:render_train_car_list),
+  STATE_TRAIN_CAR_PARAM_ADD => method(:render_train_car_param_add),
+  STATE_TRAIN_CAR_PARAM_DEL => method(:render_train_car_param_del)
+}.freeze
+
 class Controller
   def initialize
     @stations = []
@@ -74,36 +113,12 @@ class Controller
 
   # Получения ввода от пользователя.
   # Проверка из определенного модуля и обработка ошибки с повторным вводом.
-  def get_input
+  def user_input
     @input = gets.chomp
   end
 
   def render
-    case @state
-    when STATE_MENU then render_menu
-    when STATE_CREATE_STATION then render_create_station
-    when STATE_STATION_TRAINS then render_station_train_list
-    when STATE_CREATE_PASSENGER_TRAIN then render_create_passenger_train
-    when STATE_CREATE_CARGO_TRAIN then render_create_cargo_train
-    when STATE_CREATE_PASSENGER_CAR then render_create_passenger_car
-    when STATE_CREATE_CARGO_CAR then render_create_cargo_car
-    when STATE_CREATE_ROUTE then render_create_route
-    when STATE_ADD_STATION_TO_ROUTE then render_add_station_to_route
-    when STATE_DEL_STATION_FROM_ROUTE then render_del_station_from_route
-    when STATE_TRAIN_CONTROL then render_train_control
-    when STATE_TRAIN_MENU then render_train_menu
-    when STATE_TRAIN_ADD_ROUTE then render_train_add_route
-    when STATE_TRAIN_SPEED_UP then render_train_speed_up
-    when STATE_TRAIN_SPEED_DOWN then render_train_speed_down
-    when STATE_TRAIN_GOTO_NEXT_STATION then render_train_goto_next_station
-    when STATE_TRAIN_GOTO_PREV_STATION then render_train_goto_prev_station
-    when STATE_TRAIN_STATION_LIST then render_train_station_list
-    when STATE_TRAIN_ADD_CAR then render_train_add_car
-    when STATE_TRAIN_DEL_CAR then render_train_del_car
-    when STATE_TRAIN_CAR_LIST then render_train_car_list
-    when STATE_TRAIN_CAR_PARAM_ADD then render_train_car_param_add
-    when STATE_TRAIN_CAR_PARAM_DEL then render_train_car_param_del
-    end
+    RENDER_STATES[@state].call
   end
 
   def render_menu
@@ -122,25 +137,14 @@ class Controller
     puts '9.Удалить промежуточную станцию из маршрута'
     puts '10.Управление поездом'
 
-    get_input
+    user_input
 
-    case @input.to_i
-    when 1 then @state = STATE_CREATE_STATION
-    when 2 then @state = STATE_STATION_TRAINS
-    when 3 then @state = STATE_CREATE_PASSENGER_TRAIN
-    when 4 then @state = STATE_CREATE_CARGO_TRAIN
-    when 5 then @state = STATE_CREATE_PASSENGER_CAR
-    when 6 then @state = STATE_CREATE_CARGO_CAR
-    when 7 then @state = STATE_CREATE_ROUTE
-    when 8 then @state = STATE_ADD_STATION_TO_ROUTE
-    when 9 then @state = STATE_DEL_STATION_FROM_ROUTE
-    when 10 then @state = STATE_TRAIN_CONTROL
-    end
+    @state = STATES_MAIN_MENU[@input.to_i]
   end
 
   def render_create_station
     puts 'Введите наименование для новой станции:'
-    get_input
+    user_input
 
     station = Station.new(@input)
 
@@ -167,7 +171,7 @@ class Controller
 
     puts 'Выберите станцию:'
     @stations_all.each.with_index(&@name_with_index)
-    get_input
+    user_input
     station = @stations_all[@input.to_i]
 
     station.list
@@ -175,12 +179,12 @@ class Controller
 
   def render_create_passenger_train
     puts 'Введите номер для нового пассажирского поезда:'
-    get_input
+    user_input
 
     passenger_train = PassengerTrain.new(@input)
 
     puts 'Введите наименовани компании-производителя:'
-    get_input
+    user_input
 
     passenger_train.set_author(@input)
 
@@ -194,12 +198,12 @@ class Controller
 
   def render_create_cargo_train
     puts 'Введите номер для нового грузового поезда:'
-    get_input
+    user_input
 
     cargo_train = CargoTrain.new(@input)
 
     puts 'Введите наименовани компании-производителя:'
-    get_input
+    user_input
 
     cargo_train.set_author(@input)
 
@@ -213,19 +217,19 @@ class Controller
 
   def render_create_passenger_car
     puts 'Введите номер для нового пассажирского вагона:'
-    get_input
+    user_input
 
     car_num = @input
 
     puts 'Введите количество мест в вагоне:'
-    get_input
+    user_input
 
     car_seats = @input.to_i
 
     passenger_car = PassengerCar.new(car_num, car_seats)
 
     puts 'Введите наименовани компании-производителя:'
-    get_input
+    user_input
 
     passenger_car.set_author(@input)
 
@@ -239,19 +243,19 @@ class Controller
 
   def render_create_cargo_car
     puts 'Введите номер для нового грузового вагона:'
-    get_input
+    user_input
 
     car_num = @input
 
     puts 'Введите объем грузового вагона:'
-    get_input
+    user_input
 
     car_volume = @input
 
     cargo_car = CargoCar.new(car_num, car_volume)
 
     puts 'Введите наименовани компании-производителя:'
-    get_input
+    user_input
 
     cargo_car.set_author(@input)
 
@@ -264,37 +268,36 @@ class Controller
   end
 
   def render_create_route
+    @state = STATE_MENU
+
     if @stations.count < 2
       puts "\nНе достаточно станций для создания маршрута!"
-      @state = STATE_MENU
       return
     end
 
     puts 'Выберите начальную станцию'
     @stations.each.with_index(&@name_with_index)
 
-    get_input
+    user_input
     station_start = @stations[@input.to_i]
     @stations.delete(station_start)
 
     puts 'Выберите конечную станцию'
     @stations.each.with_index(&@name_with_index)
 
-    get_input
+    user_input
     station_end = @stations[@input.to_i]
     @stations.delete(station_end)
 
     route = Route.new(station_start, station_end)
     @routes << route
-
-    @state = STATE_MENU
   end
 
   def choose_route
     puts "\nВыберите маршрут:"
     @routes.each.with_index(&@name_with_index)
 
-    get_input
+    user_input
     @choosen_route = @routes[@input.to_i]
   end
 
@@ -310,7 +313,7 @@ class Controller
     puts 'Выберите станцию, чтобы добавить её в маршрут:'
     @stations.each.with_index(&@name_with_index)
 
-    get_input
+    user_input
     station = @stations[@input.to_i]
     @choosen_route.add(station)
     @stations.delete(station)
@@ -332,7 +335,7 @@ class Controller
     puts 'Выберите станцию, чтобы удалить её из маршрута:'
     @choosen_route.stations.each.with_index(&@name_with_index)
 
-    get_input
+    user_input
     station = @choosen_route.stations[@input.to_i]
     @choosen_route.del(station)
     @stations << station
@@ -351,7 +354,7 @@ class Controller
 
     puts 'Выберите поезд для управления:'
     @trains.each.with_index(&@num_with_index)
-    get_input
+    user_input
     train = @trains[@input.to_i]
     @choosen_train = train
 
@@ -382,7 +385,7 @@ class Controller
 
     puts '0.Назад'
 
-    get_input
+    user_input
 
     case @input.to_i
     when 1 then @state = STATE_TRAIN_ADD_ROUTE
@@ -446,14 +449,14 @@ class Controller
   def render_choose_train_car
     puts 'Выберите вагон:'
     @choosen_train.cars.each.with_index(&@num_with_index)
-    get_input
+    user_input
     @choosen_train.cars[@input.to_i]
   end
 
   def render_choose_car
     puts 'Выберите вагон:'
     @cars.each.with_index(&@num_with_index)
-    get_input
+    user_input
     @cars[@input.to_i]
   end
 
@@ -526,13 +529,13 @@ class Controller
       car.free_seats.each { |seat, _is_free| puts seat }
 
       puts 'Укажите номер места, которое хотите занять:'
-      get_input
+      user_input
       car.take_seat(@input.to_i)
     elsif car.cargo?
       puts "Свободно: #{car.free_space}"
 
       puts 'Укажите объем, который хотите загрузить:'
-      get_input
+      user_input
       car.load(@input.to_i)
     end
 
@@ -547,13 +550,13 @@ class Controller
       car.taked_seats.each { |seat, _is_free| puts seat }
 
       puts 'Укажите номер места, которое хотите освободить:'
-      get_input
+      user_input
       car.release_seat(@input.to_i)
     elsif car.cargo?
       puts "Текущий объем: #{car.used_space}"
 
       puts 'Укажите объем, который хотите выгрузить:'
-      get_input
+      user_input
       car.unload(@input.to_i)
     end
 

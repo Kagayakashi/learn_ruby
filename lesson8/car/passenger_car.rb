@@ -16,12 +16,12 @@ class PassengerCar < TrainCar
     amount.times { |i| @seats[i] = SEAT_FREE }
   end
 
-  def take_seat(i)
-    @seats[i] = SEAT_IN_USE
+  def take_seat(seat)
+    @seats[seat] = SEAT_IN_USE
   end
 
-  def release_seat(i)
-    @seats[i] = SEAT_FREE
+  def release_seat(seat)
+    @seats[seat] = SEAT_FREE
   end
 
   def free_seats
