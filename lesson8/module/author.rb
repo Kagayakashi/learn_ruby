@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Author
   @author = nil
-  def set_author(name)
+  def author=(name)
     @author = name
   end
-    
-  def get_author
+
+  def author
     @author
   end
 end

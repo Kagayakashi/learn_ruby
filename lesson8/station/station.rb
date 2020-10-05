@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 class Station
   include InstanceCounter # Модуль счётчика экземпляров класса
   include StationValidator
   include Valid
-  
+
   attr_reader :name
-  @@instances = []
+  @instances = []
 
   def initialize(name)
     @name = name
-    
+
     validate!
-    
+
     @trains = []
     @@instances << self
 
@@ -18,18 +20,18 @@ class Station
   end
 
   def self.all
-    @@instances
+    @instances
   end
 
-  def for_each_train(&block)
+  def for_each_train
     @trains.each { |train| yield train }
   end
-  
+
   # По умолчанию вызвать список вагонов, либо произвольный список
   def list(trains = @trains)
     trains
   end
-  
+
   # Отфильтровать список вагонов по типу и вызвать метод train_list
   def list_with_type(type)
     type_filter = proc { |train| train.type == type }
@@ -43,5 +45,4 @@ class Station
   def del(train)
     @trains.delete(train)
   end
-
 end
