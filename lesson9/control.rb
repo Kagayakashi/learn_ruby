@@ -26,70 +26,70 @@ require_relative 'train/train'
 require_relative 'train/passenger_train'
 require_relative 'train/cargo_train'
 
-STATE_MENU = 10
-STATE_CREATE_STATION = 20
-STATE_STATION_TRAINS = 21
-STATE_CREATE_PASSENGER_TRAIN = 30
-STATE_CREATE_CARGO_TRAIN = 40
-STATE_CREATE_PASSENGER_CAR = 50
-STATE_CREATE_CARGO_CAR = 60
-STATE_CREATE_ROUTE = 70
-STATE_ADD_STATION_TO_ROUTE = 80
-STATE_DEL_STATION_FROM_ROUTE = 90
-STATE_TRAIN_CONTROL = 100
-STATE_TRAIN_MENU = 110
-STATE_TRAIN_ADD_ROUTE = 120
-STATE_TRAIN_SPEED_UP = 130
-STATE_TRAIN_SPEED_DOWN = 140
-STATE_TRAIN_GOTO_NEXT_STATION = 150
-STATE_TRAIN_GOTO_PREV_STATION = 160
-STATE_TRAIN_STATION_LIST = 170
-STATE_TRAIN_ADD_CAR = 180
-STATE_TRAIN_DEL_CAR = 190
-STATE_TRAIN_CAR_LIST = 200
-STATE_TRAIN_CAR_PARAM_ADD = 210
-STATE_TRAIN_CAR_PARAM_DEL = 220
-
-STATES_MAIN_MENU = {
-  1 => STATE_CREATE_STATION,
-  2 => STATE_STATION_TRAINS,
-  3 => STATE_CREATE_PASSENGER_TRAIN,
-  4 => STATE_CREATE_CARGO_TRAIN,
-  5 => STATE_CREATE_PASSENGER_CAR,
-  6 => STATE_CREATE_CARGO_CAR,
-  7 => STATE_CREATE_ROUTE,
-  8 => STATE_ADD_STATION_TO_ROUTE,
-  9 => STATE_DEL_STATION_FROM_ROUTE,
-  10 => STATE_TRAIN_CONTROL
-}.freeze
-
-RENDER_STATES = {
-  STATE_MENU => method(:render_menu),
-  STATE_CREATE_STATION => method(:render_create_station),
-  STATE_STATION_TRAINS => method(:render_station_train_list),
-  STATE_CREATE_PASSENGER_TRAIN => method(:render_create_passenger_train),
-  STATE_CREATE_CARGO_TRAIN => method(:render_create_cargo_train),
-  STATE_CREATE_PASSENGER_CAR => method(:render_create_passenger_car),
-  STATE_CREATE_CARGO_CAR => method(:render_create_cargo_car),
-  STATE_CREATE_ROUTE => method(:render_create_route),
-  STATE_ADD_STATION_TO_ROUTE => method(:render_add_station_to_route),
-  STATE_DEL_STATION_FROM_ROUTE => method(:render_del_station_from_route),
-  STATE_TRAIN_CONTROL => method(:render_train_control),
-  STATE_TRAIN_MENU => method(:render_train_menu),
-  STATE_TRAIN_ADD_ROUTE => method(:render_train_add_route),
-  STATE_TRAIN_SPEED_UP => method(:render_train_speed_up),
-  STATE_TRAIN_SPEED_DOWN => method(:render_train_speed_down),
-  STATE_TRAIN_GOTO_NEXT_STATION => method(:render_train_goto_next_station),
-  STATE_TRAIN_GOTO_PREV_STATION => method(:render_train_goto_prev_station),
-  STATE_TRAIN_STATION_LIST => method(:render_train_station_list),
-  STATE_TRAIN_ADD_CAR => method(:render_train_add_car),
-  STATE_TRAIN_DEL_CAR => method(:render_train_del_car),
-  STATE_TRAIN_CAR_LIST => method(:render_train_car_list),
-  STATE_TRAIN_CAR_PARAM_ADD => method(:render_train_car_param_add),
-  STATE_TRAIN_CAR_PARAM_DEL => method(:render_train_car_param_del)
-}.freeze
-
 class Controller
+  STATE_MENU = 10
+  STATE_CREATE_STATION = 20
+  STATE_STATION_TRAINS = 21
+  STATE_CREATE_PASSENGER_TRAIN = 30
+  STATE_CREATE_CARGO_TRAIN = 40
+  STATE_CREATE_PASSENGER_CAR = 50
+  STATE_CREATE_CARGO_CAR = 60
+  STATE_CREATE_ROUTE = 70
+  STATE_ADD_STATION_TO_ROUTE = 80
+  STATE_DEL_STATION_FROM_ROUTE = 90
+  STATE_TRAIN_CONTROL = 100
+  STATE_TRAIN_MENU = 110
+  STATE_TRAIN_ADD_ROUTE = 120
+  STATE_TRAIN_SPEED_UP = 130
+  STATE_TRAIN_SPEED_DOWN = 140
+  STATE_TRAIN_GOTO_NEXT_STATION = 150
+  STATE_TRAIN_GOTO_PREV_STATION = 160
+  STATE_TRAIN_STATION_LIST = 170
+  STATE_TRAIN_ADD_CAR = 180
+  STATE_TRAIN_DEL_CAR = 190
+  STATE_TRAIN_CAR_LIST = 200
+  STATE_TRAIN_CAR_PARAM_ADD = 210
+  STATE_TRAIN_CAR_PARAM_DEL = 220
+  
+  STATES_MAIN_MENU = {
+    1 => STATE_CREATE_STATION,
+    2 => STATE_STATION_TRAINS,
+    3 => STATE_CREATE_PASSENGER_TRAIN,
+    4 => STATE_CREATE_CARGO_TRAIN,
+    5 => STATE_CREATE_PASSENGER_CAR,
+    6 => STATE_CREATE_CARGO_CAR,
+    7 => STATE_CREATE_ROUTE,
+    8 => STATE_ADD_STATION_TO_ROUTE,
+    9 => STATE_DEL_STATION_FROM_ROUTE,
+    10 => STATE_TRAIN_CONTROL
+  }.freeze
+  
+  RENDER_STATES = {
+    STATE_MENU => :render_menu,
+    STATE_CREATE_STATION => :render_create_station,
+    STATE_STATION_TRAINS => :render_station_train_list,
+    STATE_CREATE_PASSENGER_TRAIN => :render_create_passenger_train,
+    STATE_CREATE_CARGO_TRAIN => :render_create_cargo_train,
+    STATE_CREATE_PASSENGER_CAR => :render_create_passenger_car,
+    STATE_CREATE_CARGO_CAR => :render_create_cargo_car,
+    STATE_CREATE_ROUTE => :render_create_route,
+    STATE_ADD_STATION_TO_ROUTE => :render_add_station_to_route,
+    STATE_DEL_STATION_FROM_ROUTE => :render_del_station_from_route,
+    STATE_TRAIN_CONTROL => :render_train_control,
+    STATE_TRAIN_MENU => :render_train_menu,
+    STATE_TRAIN_ADD_ROUTE => :render_train_add_route,
+    STATE_TRAIN_SPEED_UP => :render_train_speed_up,
+    STATE_TRAIN_SPEED_DOWN => :render_train_speed_down,
+    STATE_TRAIN_GOTO_NEXT_STATION => :render_train_goto_next_station,
+    STATE_TRAIN_GOTO_PREV_STATION => :render_train_goto_prev_station,
+    STATE_TRAIN_STATION_LIST => :render_train_station_list,
+    STATE_TRAIN_ADD_CAR => :render_train_add_car,
+    STATE_TRAIN_DEL_CAR => :render_train_del_car,
+    STATE_TRAIN_CAR_LIST => :render_train_car_list,
+    STATE_TRAIN_CAR_PARAM_ADD => :render_train_car_param_add,
+    STATE_TRAIN_CAR_PARAM_DEL => :render_train_car_param_del
+  }.freeze
+
   def initialize
     @stations = []
     @stations_all = []
@@ -120,7 +120,7 @@ class Controller
   end
 
   def render
-    RENDER_STATES[@state].call
+    send RENDER_STATES[@state]
   end
 
   def render_menu
@@ -154,8 +154,6 @@ class Controller
     @stations_all << station
 
     # Вывод всех инстансов класса станции
-    puts 'Список созданных станций. Метод класса all:'
-    Station.all.each(&@name_with_index)
 
     @state = STATE_MENU
   rescue RuntimeError => e

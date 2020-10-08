@@ -7,7 +7,7 @@ class Station
   attr_reader :name
   to_validation_list :name, :presence
 
-  @instances = []
+  @@instances = []
 
   def initialize(name)
     @name = name
