@@ -6,10 +6,12 @@ require_relative 'module/author'
 require_relative 'module/instance_counter'
 
 # Модули валидации
-require_relative 'module/validate/is_valid'
-require_relative 'module/validate/station'
-require_relative 'module/validate/train'
-require_relative 'module/validate/car'
+#require_relative 'module/validate/is_valid'
+#require_relative 'module/validate/station'
+#require_relative 'module/validate/train'
+#require_relative 'module/validate/car'
+require_relative 'module/validate/validate'
+
 
 # Подключение классов
 require_relative 'station/station'

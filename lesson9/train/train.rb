@@ -6,10 +6,11 @@ class Train
   # Задается при создании нового поезда
   # Выводится при выборе поезда для управления
   include InstanceCounter # Модуль счётчика экземпляров класса
-  include Valid
-  include TrainValidator
+  include Validation
 
   attr_reader :speed, :num, :cars
+  to_validation_list :num, :format, /^[A-Za-z]{2}-[0-9]{4}$/i
+
   @object_list_hash = {}
 
   PROC_CAR_LIST = proc { |car| puts "#{car.type} вагон #{car.num};" }
